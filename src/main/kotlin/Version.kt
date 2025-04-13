@@ -8,7 +8,7 @@ data class Version(val version: String) {
         }
 
         fun parse(version: String): Version {
-            return Version(version)
+            return if (isValid(version)) Version(version) else throw IllegalArgumentException()
         }
     }
 
