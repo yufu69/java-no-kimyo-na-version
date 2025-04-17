@@ -23,10 +23,12 @@ data class JavaVersion(val version: String) {
     }
 
     fun lesserThan(other: JavaVersion): Boolean {
-        return this.updateNumber() < other.updateNumber()
+        return if (this.familyNumber() < other.familyNumber()) true
+        else this.updateNumber() < other.updateNumber()
     }
 
     fun greaterThan(other: JavaVersion): Boolean {
-        return this.updateNumber() > other.updateNumber()
+        return if (this.familyNumber() > other.familyNumber()) true
+        else this.updateNumber() > other.updateNumber()
     }
 }

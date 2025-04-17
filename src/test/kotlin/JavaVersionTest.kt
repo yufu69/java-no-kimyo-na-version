@@ -69,7 +69,7 @@ class JavaVersionTest {
         val jdk8u0 = JavaVersion.parse("JDK8u0")
 
         @Test
-        fun `「JDK7u40はJDK7u51より小さい」はtrue`() {
+        fun `「JDK7u40はJDK7u51小さい」はtrue`() {
             u40.lesserThan(u51) shouldBeEqual true
         }
 
@@ -78,5 +78,14 @@ class JavaVersionTest {
             u40.greaterThan(u51) shouldBeEqual false
         }
 
+        @Test
+        fun `「JDK7u40はJDK8u0より小さい」はtrue`() {
+            u40.lesserThan(jdk8u0) shouldBeEqual true
+        }
+
+        @Test
+        fun `「JDK8u0はJDK7u51より大きい」はtrue`() {
+            jdk8u0.greaterThan(u51) shouldBeEqual true
+        }
     }
 }
