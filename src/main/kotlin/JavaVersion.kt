@@ -12,14 +12,15 @@ data class JavaVersion(val version: String) {
         }
     }
 
-    fun familyNumber(): String {
+    fun familyNumber(): Int {
         return version
             .removePrefix("JDK")
-            .replace("u[0-9]+".toRegex(), "")
+            .substringBefore("u")
+            .toInt()
     }
 
-    fun updateNumber(): String {
-        return version.replace("JDK[0-9]+u".toRegex(), "")
+    fun updateNumber(): Int {
+        return version.substringAfter("u").toInt()
     }
 
     fun lesserThan(other: JavaVersion): Boolean {
@@ -30,5 +31,20 @@ data class JavaVersion(val version: String) {
     fun greaterThan(other: JavaVersion): Boolean {
         return if (this.familyNumber() > other.familyNumber()) true
         else this.updateNumber() > other.updateNumber()
+    }
+
+    fun nextLimitedUpdate(): JavaVersion {
+        val nextUpdateNumber = ((updateNumber() / 20) + 1) * 20
+
+        return parse("JDK${familyNumber()}u${nextUpdateNumber}")
+    }
+
+    fun nextCriticalPatchUpdate(): JavaVersion {
+        val nextMultipleOf5 = ((updateNumber() / 5) + 1) * 5
+        val nextUpdateNumber =
+            nextMultipleOf5.takeIf { it % 2 == 1 }
+                ?: (nextMultipleOf5 + 1)
+
+        return parse("JDK${familyNumber()}u${nextUpdateNumber}")
     }
 }

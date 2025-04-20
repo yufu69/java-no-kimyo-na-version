@@ -28,7 +28,6 @@ class JavaVersionTest {
         val version = "JDK7u40"
         val target = JavaVersion.parse(version)
 
-        // TODO: これを通すためにテスト対象を data class にしたんだけど それでいーんだっけ・・・？
         @Test
         fun `「JDK7u40」を表すオブジェクトを返す`() {
             target shouldBeEqual JavaVersion(version)
@@ -36,15 +35,14 @@ class JavaVersionTest {
 
         @Test
         fun バージョン番号からfamilyNumberを返す() {
-            target.familyNumber() shouldBeEqual "7"
+            target.familyNumber() shouldBeEqual 7
         }
 
         @Test
         fun バージョン番号からupdateNumberを返す() {
-            target.updateNumber() shouldBeEqual "40"
+            target.updateNumber() shouldBeEqual 40
         }
 
-        // Version.parse("JDK7u9x") #=> 例外
         @Test
         fun バージョン番号が不正な場合は例外を投げる() {
             shouldThrowExactly<IllegalArgumentException> {
@@ -80,7 +78,9 @@ class JavaVersionTest {
         }
     }
 
+    @Nested
     inner class 次のバージョンを計算する {
+        val u45 = JavaVersion.parse("JDK7u45")
 //        u45 = Version.parse("JDK7u45")
 //
 //        u60 = u45.nextLimitedUpdate()
@@ -95,12 +95,14 @@ class JavaVersionTest {
 //        ## （selfのバージョンを変えて返すのではない）
         @Test
         fun `「JDK7u45」の次のLimitedUpdateは「JDK7u60」`() {
-            TODO()
+            val u60 = u45.nextLimitedUpdate()
+            u60.updateNumber() shouldBeEqual 60
         }
 
         @Test
         fun `「JDK7u45」の次のCriticalPatchUpdateは「JDK7u51」`() {
-            TODO()
+            val u51 = u45.nextCriticalPatchUpdate()
+            u51.updateNumber() shouldBeEqual 51
         }
 
         @Test
