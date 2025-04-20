@@ -47,4 +47,23 @@ data class JavaVersion(val version: String) {
 
         return parse("JDK${familyNumber()}u${nextUpdateNumber}")
     }
+
+    fun nextSecurityAlert(): JavaVersion {
+        val nextNumber = updateNumber() + 1
+        val nextLimitedNumber = nextLimitedUpdate().updateNumber()
+        val nextCriticalPatchNumber = nextCriticalPatchUpdate().updateNumber()
+
+//        while ((nextNumber == nextLimitedNumber) || (nextNumber == nextCriticalPatchNumber)) {
+//            nextNumber++
+//        }
+//
+//        return parse("JDK${familyNumber()}u${nextNumber}")
+
+        val resultNumber = when(nextNumber) {
+            nextLimitedNumber, nextCriticalPatchNumber -> nextNumber + 1
+            else -> nextNumber
+        }
+
+        return parse("JDK${familyNumber()}u${resultNumber}")
+    }
 }

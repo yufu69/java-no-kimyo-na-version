@@ -107,7 +107,8 @@ class JavaVersionTest {
 
         @Test
         fun `「JDK7u45」の次のSecurityAlertは「JDK7u46」`() {
-            TODO()
+            val u46 = u45.nextSecurityAlert()
+            u46.updateNumber() shouldBeEqual 46
         }
     }
 }
