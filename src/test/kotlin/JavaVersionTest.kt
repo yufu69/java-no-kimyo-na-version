@@ -53,15 +53,6 @@ class JavaVersionTest {
         }
     }
 
-    //    u40 = Version.parse("JDK7u40")
-//    u51 = Version.parse("JDK7u51")
-//    jdk8u0 = Version.parse("JDK8u0")
-//
-//    u40.lt(u51)      #=> true
-//    u40.gt(u51)      #=> false
-//    u40.lt(jdk8u0)   #=> true
-//    jdk8u0.gt(u51)   #=> true
-//    #          ↑ 言語に応じて演算子オーバーロード等はご自由に
     @Nested
     inner class バージョンを大小比較する {
         val u40 = JavaVersion.parse("JDK7u40")
@@ -86,6 +77,35 @@ class JavaVersionTest {
         @Test
         fun `「JDK8u0はJDK7u51より大きい」はtrue`() {
             jdk8u0.greaterThan(u51) shouldBeEqual true
+        }
+    }
+
+    inner class 次のバージョンを計算する {
+//        u45 = Version.parse("JDK7u45")
+//
+//        u60 = u45.nextLimitedUpdate()
+//        u60.updateNumber #=> 60
+//
+//        u51 = u45.nextCriticalPatchUpdate()
+//        u51.updateNumber #=> 51
+//
+//        u46 = u45.nextSecurityAlert()
+//        u46.updateNumber #=> 46
+//        ## next～メソッドはすべて、新たなバージョンを表すオブジェクトを返す
+//        ## （selfのバージョンを変えて返すのではない）
+        @Test
+        fun `「JDK7u45」の次のLimitedUpdateは「JDK7u60」`() {
+            TODO()
+        }
+
+        @Test
+        fun `「JDK7u45」の次のCriticalPatchUpdateは「JDK7u51」`() {
+            TODO()
+        }
+
+        @Test
+        fun `「JDK7u45」の次のSecurityAlertは「JDK7u46」`() {
+            TODO()
         }
     }
 }
